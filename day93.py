@@ -1,0 +1,27 @@
+
+class Solution:
+    def restoreIpAddresses(self, s):
+        result = []
+
+        def backtrack(index, parts):
+            if len(parts) == 4:
+                if index == len(s):
+                    result.append(".".join(parts))
+                return
+
+            for length in range(1, 4):
+                part = s[index:index + length]
+
+                if len(part) != length:
+                    break
+
+                if len(part) > 1 and part[0] == '0':
+                    continue
+
+                if int(part) > 255:
+                    continue
+
+                backtrack(index + length, parts + [part])
+
+        backtrack(0, [])
+        return result
